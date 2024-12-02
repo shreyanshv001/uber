@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function UserSignup() {
   const [email, setemail] = useState("");
@@ -9,16 +10,25 @@ function UserSignup() {
   const [showPassword, setshowPassword] = useState(false);
   const [userData, setuserData] = useState({});
 
-  const submitHandler = (e) => {
+  const navigate = useNavigate();
+
+  const submitHandler = async (e) => {
     e.preventDefault();
-    setuserData({
-      username: {
+    const newUser = {
+      fullName: {
         firstname: firstname,
         lastname: lastname,
       },
       email: email,
       password: password,
-    });
+    };
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/user/register`
+    );
+    if (response.status === 201) {
+      const data = response.data;
+    }
     setemail("");
     setpassword("");
     setfirstname("");
@@ -80,7 +90,7 @@ function UserSignup() {
             ></i>
           </div>
           <button className="bg-[#111] mb-2 text-white  w-full font-semibold rounded outline-none border-none  py-2 ">
-            Sign Up
+            Create Account
           </button>
           <div className="text-center">
             Already have an Account?{" "}

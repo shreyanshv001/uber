@@ -12,7 +12,7 @@ function CaptainSignup() {
   const submitHandler = (e) => {
     e.preventDefault();
     setuserData({
-      username: {
+      fullName: {
         firstname: firstname,
         lastname: lastname,
       },
